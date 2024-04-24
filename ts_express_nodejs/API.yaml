@@ -1,0 +1,195 @@
+openapi: 3.0.3
+info:
+  title: Wypozyczalnia Jednodniowa
+  description: |-
+    Specyfikacja OpenAPI dla Wypożyczalni Jednodniowej obsługującej samochody.
+  termsOfService: http://swagger.io/terms/
+  contact:
+    email: s184896@student.pg.edu.pl
+  version: 1.0.11
+
+paths:
+  /samochod:
+    post:
+      tags:
+        - samochod
+      summary: Stwórz nowy samochód
+      description: Stwórz nowy samochód
+      requestBody:
+        description: Schemat danych do stworzenia nowego samochodu
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Samochod'
+        required: true
+      responses:
+        "200":
+          description: ok
+  
+  /samochod/{id}:
+    get:
+      tags:
+      - samochod
+      summary: Podgląd samochodu o konkretnym id
+      description: Podgląd samochodu o konkretnym id
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: ok
+          
+    delete:
+      tags:
+      - samochod
+      summary: Usunięcie samochodu o konkretnym id
+      description: Usunięcie samochodu o konkretnym id
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: "ok"
+          
+          
+  /samochod/wypozycz/{id}:
+    put:
+      tags:
+        - samochod
+      summary: Wypożyczenie samochodu o konkretnym id
+      description: Wypożyczenie samochodu o konkretnym id
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: ok
+            
+  /samochod/zwroc/{id}:
+    put:
+      tags:
+        - samochod
+      summary: Zwrot samochodu o konkretnym id
+      description: Zwrot samochodu o konkretnym id
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+             type: integer
+      responses:
+        "200":
+          description: ok
+            
+  /samochod/dodaj-uszkodzenie/{id}:
+    put:
+      tags:
+        - samochod
+      summary: Zarejestrowanie uszkodzenia w dniu dzisiejszym samochodu o konkretnym id
+      description: Zarejestrowanie uszkodzenia w dniu dzisiejszym samochodu o konkretnym id
+      parameters:
+          - name: id
+            required: true
+            in: path
+            schema:
+              type: integer
+      responses:
+          "200":
+            description: ok
+            
+  /samochod/info/{id}:
+    get:
+      tags:
+      - samochod
+      summary: Podgląd szczegółowych informacji samochodu o konkretnym id
+      description: Podgląd szczegółowych informacji samochodu o konkretnym id
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: ok
+        
+  /wypozyczalnia/podaj-wypozyczone:
+    get:
+        tags:
+        - wypozyczalnia
+        summary: Podgląd liczby wypozyczonych aut w wypożyczalni
+        description: Podgląd liczby wypozyczonych aut w wypożyczalni
+        responses:
+          "200":
+            description: ok
+        
+  /wypozyczalnia/podaj-dostepne:
+    get:
+        tags:
+        - wypozyczalnia
+        summary: Podgląd dostępnych aut w wypożyczalni w dniu dzisiejszym
+        description: Podgląd dostępnych aut w wypożyczalni w dniu dzisiejszym
+        responses:
+          "200":
+            description: ok
+        
+  /wypozyczalnia/podaj-top10-wypozyczanych:
+    get:
+        tags:
+        - wypozyczalnia
+        summary: Podgląd dziesięciu najczęściej wypożyczanych aut w wypożyczalni
+        description: Podgląd dziesięciu najczęściej wypożyczanych aut w wypożyczalni
+        responses:
+          "200":
+            description: ok
+        
+  /wypozyczalnia/podaj-top10-uszkadzanych:
+    get:
+        tags:
+        - wypozyczalnia
+        summary: Podgląd dziesięciu najczęściej uszkadzanych aut w wypożyczalni
+        description: Podgląd dziesięciu najczęściej uszkadzanych aut w wypożyczalni
+        responses:
+          "200":
+            description: ok
+  
+
+       
+components:
+  schemas:
+    Samochod:
+      type: object
+      properties:
+        numer:
+          type: integer
+          format: int64
+          example: 10
+        przebieg:
+          type: integer
+          format: int64
+          example: 1000
+        liczba_pasazerów:
+          type: integer
+          format: int64
+          example: 7
+        cena_za_dzien:
+          type: integer
+          format: int64
+          example: 70
+    WypozczalniaJednodniowa:
+      type: object
+      properties:
+        tab:
+          type: array
+          items:
+              $ref: '#/components/schemas/Samochod'
+    
